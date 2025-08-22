@@ -81,6 +81,7 @@ const translations = {
       company: "Company Name",
       message: "Your Message",
       send: "Send Message",
+      success: "Thank you for your message! We will get back to you shortly.",
       or: "or",
       contactUs: "Direct Contact",
       phone: "+90 551 953 63 12",
@@ -141,9 +142,11 @@ const translations = {
       company: "Şirket Adı",
       message: "Mesajınız",
       send: "Mesaj Gönder",
+      success:
+        "Mesajınız için teşekkürler! En kısa sürede size dönüş yapacağız.",
       or: "veya",
       contactUs: "Doğrudan İletişim",
-      phone: "+90 551 953 63 12",
+      phone: "+90 551 953 63 12 ",
       emailAddress: "info@gearsofdown.com",
       address:
         "Adnan Kahveci Mahallesi Cebeci Caddesi Yargı Apartmanı Daire 30, İstanbul/Beylikdüzü",
@@ -161,10 +164,38 @@ export default function HomePage() {
     company: "",
     message: "",
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const fullAddress =
+    "Adnan Kahveci Mahallesi Cebeci Caddesi Yargı Apartmanı Daire 30, İstanbul/Beylikdüzü";
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    fullAddress
+  )}`;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          formType: "contact", // Specify the form type
+        }),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFormData({ name: "", email: "", company: "", message: "" });
+      } else {
+        console.error("Form submission failed");
+        alert("Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      alert("Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.");
+    }
   };
 
   const handleInputChange = (
@@ -244,7 +275,7 @@ export default function HomePage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-white text-black hover:text-xl hover:bg-white hover:text-navy-900 px-8 py-4 text-lg font-semibold"
+                    className="border-white text-white hover:text-xl hover:bg-white hover:text-navy-900 px-8 py-4 text-lg font-semibold"
                   >
                     {t.hero.learnMore}
                   </Button>
@@ -255,7 +286,7 @@ export default function HomePage() {
               <div className="w-full max-w-md bg-white/10 backdrop-blur-sm rounded-2xl p-8">
                 <div className="text-center">
                   <div className="w-24 h-24 bg-white/50 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <img src="logo.png" alt="" />
+                    <img src="/logo.png" alt="" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">GearsofDown</h3>
                   <p className="text-gray-200">Amazon E-ticaret Uzmanları</p>
@@ -303,7 +334,7 @@ export default function HomePage() {
                 <div className="text-center">
                   <div className="w-32 h-32 bg-navy-100 rounded-full flex items-center justify-center mx-auto mb-6">
                     <div className="text-3xl font-bold text-navy-600">
-                      <img src="logo.png" alt="" />
+                      <img src="/logo.png" alt="" />
                     </div>
                   </div>
                   <h3 className="text-xl font-semibold text-navy-900">
@@ -417,47 +448,54 @@ export default function HomePage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <Input
-                    name="name"
-                    placeholder={t.contact.name}
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="h-12"
-                  />
-                  <Input
-                    name="email"
-                    type="email"
-                    placeholder={t.contact.email}
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="h-12"
-                  />
-                  <Input
-                    name="company"
-                    placeholder={t.contact.company}
-                    value={formData.company}
-                    onChange={handleInputChange}
-                    className="h-12"
-                  />
-                  <Textarea
-                    name="message"
-                    placeholder={t.contact.message}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    required
-                    rows={4}
-                  />
-                  <Button
-                    type="submit"
-                    className="w-full bg-navy-600 hover:bg-navy-700 h-12 text-lg"
-                  >
-                    {t.contact.send}
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </form>
+                {isSubmitted ? (
+                  <div className="text-center py-8">
+                    <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                    <p className="text-lg text-gray-700">{t.contact.success}</p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <Input
+                      name="name"
+                      placeholder={t.contact.name}
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      className="h-12"
+                    />
+                    <Input
+                      name="email"
+                      type="email"
+                      placeholder={t.contact.email}
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      className="h-12"
+                    />
+                    <Input
+                      name="company"
+                      placeholder={t.contact.company}
+                      value={formData.company}
+                      onChange={handleInputChange}
+                      className="h-12"
+                    />
+                    <Textarea
+                      name="message"
+                      placeholder={t.contact.message}
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      required
+                      rows={4}
+                    />
+                    <Button
+                      type="submit"
+                      className="w-full bg-navy-600 hover:bg-navy-700 h-12 text-lg"
+                    >
+                      {t.contact.send}
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </form>
+                )}
               </CardContent>
             </Card>
 
@@ -472,23 +510,46 @@ export default function HomePage() {
                     <Mail className="h-6 w-6 text-blue-400 mt-1 flex-shrink-0" />
                     <div>
                       <div className="font-medium">E-posta</div>
-                      <div className="text-gray-300">
+                      <a
+                        href="mailto:info@gearsofdown.com"
+                        className="text-gray-300 hover:underline"
+                      >
                         {t.contact.emailAddress}
-                      </div>
+                      </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <Phone className="h-6 w-6 text-blue-400 mt-1 flex-shrink-0" />
                     <div>
                       <div className="font-medium">Telefon</div>
-                      <div className="text-gray-300">{t.contact.phone}</div>
+                      <div className="flex flex-col">
+                        <a
+                          href="tel:+905350353450"
+                          className="text-gray-300 hover:underline"
+                        >
+                          +90 535 035 34 50 - Temel K.
+                        </a>
+                        <a
+                          href="tel:+905519536312"
+                          className="text-gray-300 hover:underline"
+                        >
+                          +90 551 953 63 12 - Muaz I.
+                        </a>
+                      </div>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <MapPin className="h-6 w-6 text-blue-400 mt-1 flex-shrink-0" />
                     <div>
                       <div className="font-medium">Adres</div>
-                      <div className="text-gray-300">{t.contact.address}</div>
+                      <a
+                        href={googleMapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-300 hover:underline"
+                      >
+                        {t.contact.address}
+                      </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">

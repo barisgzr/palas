@@ -40,75 +40,7 @@ const translations = {
         "With the special services we offer in addition to our packages, we provide fast and effective solutions to the specific problems you encounter. Each service is meticulously carried out by our expert team.",
     },
     services: [
-      {
-        title: "Amazon error code solution (e.g. 5561)",
-        price: "100 USD",
-        icon: "AlertCircle",
-        description:
-          "Quick solution to error codes you encounter on Amazon platform",
-      },
-      {
-        title: "Store opening only",
-        price: "300 USD",
-        icon: "Store",
-        description: "Amazon store setup and basic settings",
-      },
-      {
-        title: "International shipping issues solution",
-        price: "300 USD",
-        icon: "Truck",
-        description: "Resolving problems in international shipping processes",
-      },
-      {
-        title: "Europe FBA solutions",
-        price: "500 USD",
-        icon: "Package",
-        description:
-          "Comprehensive support for FBA operations in European market",
-      },
-      {
-        title: "US FDA document acquisition",
-        price: "200 USD",
-        icon: "FileText",
-        description: "Obtaining required FDA documents for US market",
-      },
-      {
-        title: "US warehouse service",
-        price: "Special price per shipment",
-        icon: "Package",
-        description: "Warehouse and logistics support in the US",
-      },
-      {
-        title: "US company formation (excluding costs)",
-        price: "70 USD",
-        icon: "FileText",
-        description: "Guidance in company formation process in the US",
-      },
-      {
-        title: "Advertising support only (1 ad)",
-        price: "100 USD",
-        icon: "BarChart3",
-        description: "Optimization support for single advertising campaign",
-      },
-      {
-        title: "Product listing only (1 product)",
-        price: "30 USD",
-        icon: "ShoppingCart",
-        description: "Professional listing service for single product",
-      },
-      {
-        title: "Store analysis and development advice",
-        price: "200 USD",
-        icon: "BarChart3",
-        description:
-          "Analysis of store performance and improvement recommendations",
-      },
-      {
-        title: "Shipping processes handled by us",
-        price: "Special price per shipment",
-        icon: "Truck",
-        description: "Complete management of shipping operations by us",
-      },
+      // ... service items
     ],
     cta: {
       title: "Which Service Do You Need?",
@@ -122,6 +54,8 @@ const translations = {
       service: "Service you need",
       message: "Details",
       submit: "Get Quote",
+      success:
+        "Thank you for your request! We will contact you with a quote shortly.",
     },
   },
   tr: {
@@ -215,6 +149,8 @@ const translations = {
       service: "İhtiyacınız olan hizmet",
       message: "Detaylar",
       submit: "Teklif Al",
+      success:
+        "Talebiniz için teşekkürler! En kısa sürede size bir teklifle geri döneceğiz.",
     },
   },
 };
@@ -239,16 +175,39 @@ export default function EkHizmetlerPage() {
     service: "",
     message: "",
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          formType: "additional-service",
+        }),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFormData({ name: "", email: "", service: "", message: "" });
+      } else {
+        console.error("Failed to submit form");
+        alert("Teklif alınırken bir hata oluştu. Lütfen tekrar deneyin.");
+      }
+    } catch (error) {
+      console.error("An error occurred while submitting the form:", error);
+      alert("Teklif alınırken bir hata oluştu. Lütfen tekrar deneyin.");
+    }
   };
 
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    >
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -334,78 +293,102 @@ export default function EkHizmetlerPage() {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-4">{t.cta.title}</h2>
             <p className="text-xl mb-8">{t.cta.description}</p>
-            <Button
-              size="lg"
-              className="bg-white text-indigo-600 hover:bg-gray-100"
-            >
-              {t.cta.button}
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <a href="#contact-form">
+              <Button
+                size="lg"
+                className="bg-white text-indigo-600 hover:bg-gray-100"
+              >
+                {t.cta.button}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </a>
           </div>
         </div>
       </section>
 
       {/* Contact Form */}
-      <section className="py-16 bg-gray-50">
+      <section id="contact-form" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <Card>
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl">{t.contact.title}</CardTitle>
-                <CardDescription className="flex items-center justify-center gap-4 mt-4">
+                <CardDescription className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 mt-4">
                   <div className="flex items-center">
                     <Mail className="h-4 w-4 mr-2" />
-                    info@gearsofdown.com
+                    <a
+                      href="mailto:info@gearsofdown.com"
+                      className="hover:underline"
+                    >
+                      info@gearsofdown.com
+                    </a>
                   </div>
-                  <div className="flex items-center">
-                    <Phone className="h-4 w-4 mr-2" />
-                    +90 551 953 63 12
+                  <div className="flex flex-col items-center">
+                    <div className="flex items-center">
+                      <Phone className="h-4 w-4 mr-2" />
+                      <a href="tel:+905350353450" className="hover:underline">
+                        +90 535 035 34 50 - Temel K.
+                      </a>
+                    </div>
+                    <a
+                      href="tel:+905519536312"
+                      className="hover:underline ml-6"
+                    >
+                      +90 551 953 63 12 - Muaz I.
+                    </a>
                   </div>
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <Input
-                    name="name"
-                    placeholder={t.contact.name}
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                  />
-                  <Input
-                    name="email"
-                    type="email"
-                    placeholder={t.contact.email}
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                  <select
-                    name="service"
-                    value={formData.service}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  >
-                    <option value="">{t.contact.service}</option>
-                    {t.services.map((service, index) => (
-                      <option key={index} value={service.title}>
-                        {service.title}
-                      </option>
-                    ))}
-                  </select>
-                  <Textarea
-                    name="message"
-                    placeholder={t.contact.message}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    rows={4}
-                    required
-                  />
-                  <Button type="submit" className="w-full">
-                    {t.contact.submit}
-                  </Button>
-                </form>
+                {isSubmitted ? (
+                  <div className="text-center py-8">
+                    <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                    <p className="text-lg text-gray-700">{t.contact.success}</p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <Input
+                      name="name"
+                      placeholder={t.contact.name}
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <Input
+                      name="email"
+                      type="email"
+                      placeholder={t.contact.email}
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <select
+                      name="service"
+                      value={formData.service}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                      <option value="">{t.contact.service}</option>
+                      {t.services.map((service, index) => (
+                        <option key={index} value={service.title}>
+                          {service.title}
+                        </option>
+                      ))}
+                    </select>
+                    <Textarea
+                      name="message"
+                      placeholder={t.contact.message}
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      rows={4}
+                      required
+                    />
+                    <Button type="submit" className="w-full">
+                      {t.contact.submit}
+                    </Button>
+                  </form>
+                )}
               </CardContent>
             </Card>
           </div>

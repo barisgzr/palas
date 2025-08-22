@@ -41,7 +41,7 @@ const translations = {
       },
       phone: {
         title: "Phone",
-        value: "+90 551 953 63 12",
+        value: "+90 535 035 34 50 - Temel K.\n+90 551 953 63 12 - Muaz I.",
         description: "Monday to Friday, 9 AM - 6 PM EST",
       },
       address: {
@@ -95,7 +95,7 @@ const translations = {
       },
       phone: {
         title: "Telefon",
-        value: "+90 551 953 63 12",
+        value: "+90 535 035 34 50 - Temel K.\n+90 551 953 63 12 - Muaz I.",
         description: "Pazartesi - Cuma, 09:00 - 18:00 EST",
       },
       address: {
@@ -124,7 +124,8 @@ const translations = {
 
 export default function ContactPage() {
   const { language } = useLanguage();
-  const t = translations[language];
+  const t =
+    translations[language as keyof typeof translations] || translations.en;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -134,12 +135,43 @@ export default function ContactPage() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const fullAddress =
+    "Adnan Kahveci Mahallesi Cebeci Caddesi Yargı Apartmanı Daire 30, İstanbul/Beylikdüzü, Türkiye";
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    fullAddress
+  )}`;
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your email service
-    console.log("Contact form submitted:", formData);
-    setIsSubmitted(true);
-    setFormData({ name: "", email: "", company: "", subject: "", message: "" });
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          formType: "contact",
+        }),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        console.error("Form submission failed");
+        alert("Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      alert("Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.");
+    }
   };
 
   const handleInputChange = (
@@ -165,7 +197,7 @@ export default function ContactPage() {
 
       {/* Direct Contact Section */}
       <section className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-navy-900 mb-4">
               {t.direct.title}
@@ -185,9 +217,12 @@ export default function ContactPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-navy-600 font-medium">
+                <a
+                  href={`mailto:${t.info.email.value}`}
+                  className="text-navy-600 font-medium hover:underline"
+                >
                   {t.info.email.value}
-                </p>
+                </a>
                 <p className="text-gray-600 text-sm">
                   {t.info.email.description}
                 </p>
@@ -205,9 +240,14 @@ export default function ContactPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-navy-600 font-medium">
-                  {t.info.phone.value}
-                </p>
+                <div className="flex flex-col text-navy-600 font-medium">
+                  <a href="tel:+905350353450" className="hover:underline">
+                    +90 535 035 34 50 - Temel K.
+                  </a>
+                  <a href="tel:+905519536312" className="hover:underline">
+                    +90 551 953 63 12 - Muaz I.
+                  </a>
+                </div>
                 <p className="text-gray-600 text-sm">
                   {t.info.phone.description}
                 </p>
@@ -225,9 +265,14 @@ export default function ContactPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-navy-600 font-medium whitespace-pre-line">
+                <a
+                  href={googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-navy-600 font-medium whitespace-pre-line hover:underline"
+                >
                   {t.info.address.value}
-                </p>
+                </a>
                 <p className="text-gray-600 text-sm">
                   {t.info.address.description}
                 </p>
@@ -245,7 +290,7 @@ export default function ContactPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-navy-600 font-medium whitespace-pre-line text-sm">
+                <p className="text-navy-600 font-medium whitespace-pre-line">
                   {t.info.hours.value}
                 </p>
                 <p className="text-gray-600 text-sm">

@@ -36,6 +36,11 @@ const translations = {
 
 export function Footer({ currentLang }: FooterProps) {
   const t = translations[currentLang];
+  const fullAddress =
+    "Adnan Kahveci Mah. Cebeci Cad. Yargı Apt. Daire 30, İstanbul/Beylikdüzü";
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    fullAddress
+  )}`;
 
   return (
     <footer className="bg-navy-900 text-white">
@@ -98,31 +103,41 @@ export function Footer({ currentLang }: FooterProps) {
           <div>
             <h3 className="text-lg font-semibold mb-4">{t.contact}</h3>
             <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-gray-400" />
+              <div className="flex items-start gap-3">
+                <Mail className="h-5 w-5 text-gray-400 mt-1" />
                 <a
                   href="mailto:info@gearsofdown.com"
-                  className="text-gray-300 underline"
+                  className="text-gray-300 hover:text-white transition-colors"
                 >
                   info@gearsofdown.com
                 </a>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-gray-400" />
-                <a href="tel:+905519536312" className="text-gray-300 underline">
-                  +90 551 953 63 12
-                </a>
+              <div className="flex items-start gap-3">
+                <Phone className="h-5 w-5 text-gray-400 mt-1 flex-shrink-0" />
+                <div className="flex flex-col">
+                  <a
+                    href="tel:+905350353450"
+                    className="text-gray-300 hover:text-white transition-colors"
+                  >
+                    +90 535 035 34 50 Temel K.
+                  </a>
+                  <a
+                    href="tel:+905519536312"
+                    className="text-gray-300 hover:text-white transition-colors"
+                  >
+                    +90 551 953 63 12 Muaz I.
+                  </a>
+                </div>
               </div>
-              <div className="flex items-center gap-3">
-                <MapPin className="h-5 w-5 text-gray-400" />
+              <div className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 text-gray-400 mt-1" />
                 <a
-                  href="https://maps.google.com/?q=Adnan%20Kahveci%20Mahallesi%20Cebeci%20Caddesi%20Yarg%C4%B1%20Apartman%C4%B1%20Daire%2030%2C%20%C4%B0stanbul%2FBeylikd%C3%BCz%C3%BC"
+                  href={googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-300 underline"
+                  className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Adnan Kahveci Mah. Cebeci Cad. Yargı Apt. Daire 30,
-                  İstanbul/Beylikdüzü
+                  {fullAddress}
                 </a>
               </div>
             </div>

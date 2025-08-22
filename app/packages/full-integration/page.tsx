@@ -197,29 +197,49 @@ export default function FullIntegrationPackagePage() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Meeting request submitted:", formData);
-    setIsSubmitted(true);
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      employees: "",
-      industry: "",
-      revenue: "",
-      products: "",
-      platforms: "",
-      brandGoals: "",
-      challenges: "",
-      timeline: "",
-    });
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          formType: "full-integration",
+        }),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          employees: "",
+          industry: "",
+          revenue: "",
+          products: "",
+          platforms: "",
+          brandGoals: "",
+          challenges: "",
+          timeline: "",
+        });
+      } else {
+        console.error("Form submission failed");
+        alert("An error occurred. Please try again.");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
 
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    >
   ) => {
     setFormData({
       ...formData,
@@ -361,11 +381,29 @@ export default function FullIntegrationPackagePage() {
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-3">
                   <Mail className="h-5 w-5 text-navy-600" />
-                  <span className="text-gray-600">info@gearsofdown.com</span>
+                  <a
+                    href="mailto:info@gearsofdown.com"
+                    className="text-gray-600 hover:underline"
+                  >
+                    info@gearsofdown.com
+                  </a>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Phone className="h-5 w-5 text-navy-600" />
-                  <span className="text-gray-600">+90 551 953 63 12</span>
+                <div className="flex items-start gap-3">
+                  <Phone className="h-5 w-5 text-navy-600 flex-shrink-0 mt-1" />
+                  <div className="flex flex-col">
+                    <a
+                      href="tel:+905350353450"
+                      className="text-gray-600 hover:underline"
+                    >
+                      +90 535 035 34 50 - Temel K.
+                    </a>
+                    <a
+                      href="tel:+905519536312"
+                      className="text-gray-600 hover:underline"
+                    >
+                      +90 551 953 63 12 - Muaz I.
+                    </a>
+                  </div>
                 </div>
               </CardContent>
             </Card>
