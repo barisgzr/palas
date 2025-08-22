@@ -24,7 +24,7 @@ const translations = {
     mission: {
       title: "Our Mission",
       content:
-        "To help every business, regardless of size, realize its potential. As Gears Of Down, we focus on providing sustainable growth and measurable success by transferring the real experiences we have gained in the field to our consultants.",
+        "At GearsOfDown, our goal is to take Amazon consulting far beyond a few training videos or limited basic support; we aim to provide every business, large or small, with the quality service it deserves. As a true guide in the complex world of Amazon, we enable our local sellers to play a more effective role in global markets such as overseas and Amazon.",
     },
     values: {
       title: "Our Values",
@@ -83,7 +83,7 @@ const translations = {
     mission: {
       title: "Misyonumuz",
       content:
-        "Küçük ya da büyük ölçekli fark etmeksizin, her işletmenin potansiyelini ortaya çıkarmasına yardımcı olmak. Gears Of Down olarak biz, sahada edindiğimiz gerçek tecrübeleri danışanlarımıza aktararak, sürdürülebilir büyüme ve ölçülebilir başarı sağlamaya odaklanıyoruz.",
+        "GearsOfDown olarak, Amazon danışmanlığını birkaç eğitim videosu veya sınırlı temel destekten çok daha ileriye taşımak; küçük veya büyük fark etmeksizin, her ölçekte işletmeye hak ettiği kaliteli hizmeti sunmak amacımızdır. Amazon’un karmaşık dünyasında gerçek bir rehber olarak, yurtdışı ve Amazon gibi global pazarlarda yerel satıcılarımızın daha etkin bir şekilde rol almasını sağlamaktayız.",
     },
     values: {
       title: "Değerlerimiz",

@@ -53,6 +53,7 @@ export function Navigation({ currentLang, onLanguageChange }: NavigationProps) {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center">
+            <img src="logo.png" alt="" className="h-14 w-14 " />
             <div className="text-2xl font-bold text-navy-900">GearsofDown</div>
           </Link>
 

@@ -292,7 +292,7 @@ export default function PackagesPage() {
             return (
               <Card
                 key={pkg.id}
-                className="hover:shadow-2xl hover:scale-[1.05] transition-all duration-300 cursor-pointer group h-full "
+                className="hover:shadow-2xl hover:scale-[1.05] transition-all duration-300 cursor-pointer group h-full lg:w-72"
               >
                 <CardHeader className="text-center pb-4">
                   <div

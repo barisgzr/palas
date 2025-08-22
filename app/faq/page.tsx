@@ -41,12 +41,12 @@ const translations = {
         {
           question: "How much capital is needed to start selling on Amazon?",
           answer:
-            "This completely depends on your product category and sales strategy. You can start with a minimum of $1000-2000, but $5000-10000 provides a more comfortable start for larger volumes. We determine the appropriate strategy for you together.",
+            "This depends entirely on your product category and sales strategy. It can also vary depending on how much volume you aim to achieve within a given time frame. We will determine your initial capital based on the scope of your project during our first consultation.",
         },
         {
           question: "Which products are more profitable to sell?",
           answer:
-            "This completely depends on market analysis. Products with high demand but low competition are the ideal choice. In our product research training, we give you detailed information on this subject and teach you how to find profitable products.",
+            "Each category on Amazon has a specific volume. Here, there are critical factors such as which categories you can access more easily and at a reasonable cost. In our product research training, we provide you with detailed information on this subject and determine the most suitable category for you.",
         },
       ],
     },
@@ -79,11 +79,6 @@ const translations = {
       title: "Pricing and Process Questions",
       items: [
         {
-          question: "Do you offer payment plans?",
-          answer:
-            "This section can be changed but let it remain as it is now. We have monthly payment plans available and offer flexible payment options.",
-        },
-        {
           question: "How is your pricing determined?",
           answer:
             "Our prices are determined according to package content, duration and scope of service provided. Final pricing may change according to your requests before the process and is determined at the beginning.",
@@ -101,7 +96,7 @@ const translations = {
         {
           question: "How long does project initiation take?",
           answer:
-            "We usually start the project within 1-2 weeks after the contract is signed. This period can be shortened even further for urgent situations.",
+            "We usually start the project within 1-2 weeks after signing the contract. The process can be shortened upon request.",
         },
         {
           question: "What payment methods do you accept?",
@@ -142,12 +137,12 @@ const translations = {
         {
           question: "Amazon'da satışa başlamak için ne kadar sermaye gerekir?",
           answer:
-            "Bu tamamen ürün kategorisi ve satış stratejinize bağlıdır. Minimum 1000-2000$ ile başlanabilir ancak daha büyük hacimler için 5000-10000$ daha rahat bir başlangıç sağlar. Size uygun stratejiyi birlikte belirleriz.",
+            "Bu tamamen ürün kategorisi ve satış stratejinize bağlıdır. Aynı zamanda ne kadar süre içerisinde ne kadar bir hacim hedeflediğinize göre değişkenlik gösterebilir. Projenizin hacmine göre başlangıç sermayenizi ilk danışmanlık görüşmemizde birlikte belirleyeceğiz.",
         },
         {
           question: "Hangi ürünleri satmak daha karlı?",
           answer:
-            "Bu tamamen pazar analizine bağlıdır. Talep yüksek ama rekabet düşük olan ürünler ideal seçimdir. Ürün araştırma eğitimimizde size bu konuda detaylı bilgi veriyoruz ve karlı ürünleri nasıl bulacağınızı öğretiyoruz.",
+            "Amazon'da her kategorinin belirli bir hacmi vardır. Burada sizin hangi kategorideki ürünlere daha kolay, uygun maliyetle ulaşabildiğiniz gibi kritik faktörler vardır. Ürün araştırma eğitimimizde size bu konuda detaylı bilgi veriyoruz ve sizin için en uygun kategoriyi belirliyoruz.",
         },
       ],
     },
@@ -180,11 +175,6 @@ const translations = {
       title: "Fiyatlandırma ve Süreç Soruları",
       items: [
         {
-          question: "Ödeme planları sunuyor musunuz?",
-          answer:
-            "Bu kısım değiştirilebilir ancak şimdi olduğu gibi kalsın. Aylık ödeme planlarımız mevcuttur ve esnek ödeme seçenekleri sunuyoruz.",
-        },
-        {
           question: "Fiyatlandırmanız nasıl belirleniyor?",
           answer:
             "Fiyatlarımız paket içeriği, süre ve verilen hizmetin kapsamına göre belirlenir. Nihai fiyatlandırma süreç öncesi taleplerinize göre değişiklik gösterebilir ve başta belirlenir.",
@@ -202,7 +192,7 @@ const translations = {
         {
           question: "Proje başlangıcı ne kadar sürüyor?",
           answer:
-            "Sözleşme imzalandıktan sonra genellikle 1-2 hafta içinde projeye başlıyoruz. Acil durumlar için bu süre daha da kısaltılabilir.",
+            "Sözleşme imzalandıktan sonra genellikle 1-2 hafta içinde projeye başlıyoruz. Talep doğrultusunda süreç kısaltılabilir.",
         },
         {
           question: "Hangi ödeme yöntemlerini kabul ediyorsunuz?",

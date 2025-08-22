@@ -254,9 +254,8 @@ export default function HomePage() {
             <div className="flex justify-center lg:justify-end">
               <div className="w-full max-w-md bg-white/10 backdrop-blur-sm rounded-2xl p-8">
                 <div className="text-center">
-                  <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                    {/* Logo placeholder */}
-                    <div className="text-2xl font-bold">GO</div>
+                  <div className="w-24 h-24 bg-white/50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <img src="logo.png" alt="" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">GearsofDown</h3>
                   <p className="text-gray-200">Amazon E-ticaret Uzmanları</p>
@@ -303,8 +302,9 @@ export default function HomePage() {
               <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
                 <div className="text-center">
                   <div className="w-32 h-32 bg-navy-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    {/* Logo placeholder - will be replaced with actual logo */}
-                    <div className="text-3xl font-bold text-navy-600">LOGO</div>
+                    <div className="text-3xl font-bold text-navy-600">
+                      <img src="logo.png" alt="" />
+                    </div>
                   </div>
                   <h3 className="text-xl font-semibold text-navy-900">
                     GearsofDown
