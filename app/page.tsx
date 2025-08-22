@@ -275,7 +275,7 @@ export default function HomePage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-white text-white hover:text-xl hover:bg-white hover:text-navy-900 px-8 py-4 text-lg font-semibold"
+                    className="border-white text-black hover:text-xl hover:bg-white hover:text-navy-900 px-8 py-4 text-lg font-semibold"
                   >
                     {t.hero.learnMore}
                   </Button>
